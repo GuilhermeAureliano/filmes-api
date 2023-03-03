@@ -6,6 +6,8 @@ import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Filme;
 import com.ubots.filmes.repository.FilmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -48,5 +50,10 @@ public class FilmeServiceImpl implements FilmeService {
         }
 
         return filmeOpt.get();
+    }
+
+    @Override
+    public Page<Filme> findAll(Pageable pageable) {
+        return this.filmeRepository.findAll(pageable);
     }
 }
