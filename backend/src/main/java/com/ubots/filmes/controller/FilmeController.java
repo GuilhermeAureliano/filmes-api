@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -24,7 +25,7 @@ public class FilmeController {
     private FilmeService filmeService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody FilmeCreateDTO filmeCreateDTO) {
+    public ResponseEntity<?> create(@RequestBody @Valid FilmeCreateDTO filmeCreateDTO) {
         Filme createdFilme = new Filme();
         BeanUtils.copyProperties(filmeCreateDTO, createdFilme);
         createdFilme.setReleaseYear(LocalDate.parse(filmeCreateDTO.getReleaseYear(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
