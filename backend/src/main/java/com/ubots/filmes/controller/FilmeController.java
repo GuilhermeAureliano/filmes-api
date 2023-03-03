@@ -53,4 +53,11 @@ public class FilmeController {
 
         return new ResponseEntity<>(filmePage, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable(value = "id") UUID id) throws ApiException {
+        this.filmeService.delete(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

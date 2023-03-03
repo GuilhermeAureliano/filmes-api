@@ -17,4 +17,6 @@ public interface FilmeService {
     Filme getById(UUID id) throws ApiException;
 
     Page<Filme> findAll(Pageable pageable);
+
+    void delete(UUID id) throws ApiException;
 }

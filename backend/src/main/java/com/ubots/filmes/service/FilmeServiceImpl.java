@@ -56,4 +56,11 @@ public class FilmeServiceImpl implements FilmeService {
     public Page<Filme> findAll(Pageable pageable) {
         return this.filmeRepository.findAll(pageable);
     }
+
+    @Override
+    public void delete(UUID id) throws ApiException {
+        Filme filme = this.getById(id);
+
+        this.filmeRepository.delete(filme);
+    }
 }
