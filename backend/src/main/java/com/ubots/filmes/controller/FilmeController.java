@@ -3,6 +3,7 @@ package com.ubots.filmes.controller;
 import com.ubots.filmes.dto.FilmeCreateDTO;
 import com.ubots.filmes.dto.FilmeEditDTO;
 import com.ubots.filmes.dto.FilmeResponseDTO;
+import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Filme;
 import com.ubots.filmes.service.FilmeService;
 import org.springframework.beans.BeanUtils;
@@ -35,7 +36,7 @@ public class FilmeController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable(value = "id") UUID id, @RequestBody FilmeEditDTO filmeEditDTO) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") UUID id, @RequestBody FilmeEditDTO filmeEditDTO) throws ApiException {
         Filme filme = this.filmeService.update(id, filmeEditDTO);
         FilmeResponseDTO  response = new FilmeResponseDTO(filme);
 

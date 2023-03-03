@@ -1,6 +1,8 @@
 package com.ubots.filmes.service;
 
 import com.ubots.filmes.dto.FilmeEditDTO;
+import com.ubots.filmes.erros.FilmeError;
+import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Filme;
 import com.ubots.filmes.repository.FilmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class FilmeServiceImpl implements FilmeService {
     }
 
     @Override
-    public Filme update(UUID id, FilmeEditDTO filmeEditDTO) {
+    public Filme update(UUID id, FilmeEditDTO filmeEditDTO) throws ApiException {
         Filme filme = this.getById(id);
 
         if (filmeEditDTO.getName() != null && !filmeEditDTO.getName().isBlank()) {
@@ -38,8 +40,12 @@ public class FilmeServiceImpl implements FilmeService {
     }
 
     @Override
-    public Filme getById(UUID id) {
+    public Filme getById(UUID id) throws ApiException {
         Optional<Filme> filmeOpt = this.filmeRepository.findById(id);
+
+        if (filmeOpt.isEmpty()) {
+            throw FilmeError.errorFilmNotExist();
+        }
 
         return filmeOpt.get();
     }
