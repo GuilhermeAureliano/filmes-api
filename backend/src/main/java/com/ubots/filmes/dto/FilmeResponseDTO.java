@@ -1,5 +1,6 @@
 package com.ubots.filmes.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ubots.filmes.model.Filme;
 import lombok.Getter;
 
@@ -19,6 +20,7 @@ public class FilmeResponseDTO {
 
     private final String genre;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private final LocalDate releaseYear;
 
     private final Double mediaAvaliacoes;
