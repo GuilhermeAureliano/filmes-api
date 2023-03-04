@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -31,4 +33,22 @@ public class Filme {
     private String genre;
     @Column(nullable = false)
     private LocalDate releaseYear;
+
+    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Avaliacao> avaliacoes = new ArrayList<>();
+
+    private Double mediaAvaliacoes;
+
+    public void updateMediaAvaliacoes() {
+        if (!avaliacoes.isEmpty()) {
+            double soma = 0;
+            for (Avaliacao av : avaliacoes) {
+                soma += av.getGrade();
+            }
+            this.mediaAvaliacoes = soma / (this.avaliacoes.size());
+        } else {
+            this.mediaAvaliacoes = null;
+        }
+    }
+
 }

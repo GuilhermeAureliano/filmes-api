@@ -1,11 +1,13 @@
 package com.ubots.filmes.controller;
 
-import com.ubots.filmes.dto.FilmeCreateDTO;
-import com.ubots.filmes.dto.FilmeEditDTO;
-import com.ubots.filmes.dto.FilmeResponseDTO;
+import com.ubots.filmes.dto.*;
 import com.ubots.filmes.exceptions.ApiException;
+import com.ubots.filmes.model.Avaliacao;
 import com.ubots.filmes.model.Filme;
+import com.ubots.filmes.service.AvaliacaoService;
 import com.ubots.filmes.service.FilmeService;
+import com.ubots.filmes.utils.NotaEnum;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,9 @@ public class FilmeController {
 
     @Autowired
     private FilmeService filmeService;
+
+    @Autowired
+    private AvaliacaoService avaliacaoService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody @Valid FilmeCreateDTO filmeCreateDTO) {
@@ -59,5 +64,20 @@ public class FilmeController {
         this.filmeService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(value = "/{id}/evaluation", method = RequestMethod.POST)
+    public ResponseEntity<?> addEvaluation(@PathVariable(value = "id") UUID id, @RequestParam(value = "Nota do filme") NotaEnum notaEnum, @RequestParam String comment) throws ApiException {
+        Filme filme = this.filmeService.getById(id);
+
+        Avaliacao createdAvaliacao = new Avaliacao();
+        createdAvaliacao.setGrade(notaEnum.getValor());
+        createdAvaliacao.setComment(comment);
+        createdAvaliacao.setFilme(filme);
+        this.avaliacaoService.addEvaluation(createdAvaliacao);
+
+        AvaliacaoResponseDTO response = new AvaliacaoResponseDTO(createdAvaliacao);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
