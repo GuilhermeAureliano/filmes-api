@@ -1,6 +1,7 @@
 package com.ubots.filmes.controller;
 
 import com.ubots.filmes.dto.*;
+import com.ubots.filmes.erros.FilmeError;
 import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Avaliacao;
 import com.ubots.filmes.model.Filme;
@@ -34,10 +35,16 @@ public class FilmeController {
     private AvaliacaoService avaliacaoService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody @Valid FilmeCreateDTO filmeCreateDTO) {
+    public ResponseEntity<?> create(@RequestBody @Valid FilmeCreateDTO filmeCreateDTO) throws ApiException {
         Filme createdFilme = new Filme();
         BeanUtils.copyProperties(filmeCreateDTO, createdFilme);
-        createdFilme.setReleaseYear(LocalDate.parse(filmeCreateDTO.getReleaseYear(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+        try {
+            createdFilme.setReleaseYear(LocalDate.parse(filmeCreateDTO.getReleaseYear(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        } catch (Exception e) {
+            throw FilmeError.errorInvalidDateFormat();
+        }
+
         this.filmeService.create(createdFilme);
         FilmeResponseDTO response = new FilmeResponseDTO(createdFilme);
 
