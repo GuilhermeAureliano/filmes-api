@@ -21,6 +21,8 @@ public class FilmeResponseDTO {
 
     private final LocalDate releaseYear;
 
+    private final Double mediaAvaliacoes;
+
     public FilmeResponseDTO(Filme filme) {
         this.id = filme.getId();
         this.name = filme.getName();
@@ -28,5 +30,7 @@ public class FilmeResponseDTO {
         this.synopsis = filme.getSynopsis();
         this.genre = filme.getGenre();
         this.releaseYear = filme.getReleaseYear();
+        this.mediaAvaliacoes = filme.getMediaAvaliacoes();
     }
+
 }

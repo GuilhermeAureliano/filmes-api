@@ -55,8 +55,9 @@ public class FilmeController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> findAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<Filme> filmePage = this.filmeService.findAll(pageable);
+        Page<FilmeResponseDTO> response = filmePage.map(FilmeResponseDTO::new);
 
-        return new ResponseEntity<>(filmePage, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
