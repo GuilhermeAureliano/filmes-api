@@ -1,6 +1,7 @@
 package com.ubots.filmes.service;
 
 import com.ubots.filmes.dto.FilmeEditDTO;
+import com.ubots.filmes.dto.FilmeResponseDTO;
 import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Filme;
 
@@ -20,4 +21,5 @@ public interface FilmeService {
 
     void delete(UUID id) throws ApiException;
 
+    Page<FilmeResponseDTO> findAllNotEvaluation(Pageable pageable);
 }

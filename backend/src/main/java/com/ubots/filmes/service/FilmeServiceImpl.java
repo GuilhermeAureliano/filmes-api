@@ -1,6 +1,7 @@
 package com.ubots.filmes.service;
 
 import com.ubots.filmes.dto.FilmeEditDTO;
+import com.ubots.filmes.dto.FilmeResponseDTO;
 import com.ubots.filmes.erros.FilmeError;
 import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Filme;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmeServiceImpl implements FilmeService {
@@ -62,5 +64,13 @@ public class FilmeServiceImpl implements FilmeService {
         Filme filme = this.getById(id);
 
         this.filmeRepository.delete(filme);
+    }
+
+    @Override
+    public Page<FilmeResponseDTO> findAllNotEvaluation(Pageable pageable) {
+        Page<Filme> filmePage = this.filmeRepository.findAllNotEvaluation(pageable);
+        Page<FilmeResponseDTO> response = filmePage.map(FilmeResponseDTO::new);
+
+        return response;
     }
 }

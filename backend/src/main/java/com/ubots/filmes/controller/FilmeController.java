@@ -1,6 +1,9 @@
 package com.ubots.filmes.controller;
 
-import com.ubots.filmes.dto.*;
+import com.ubots.filmes.dto.AvaliacaoResponseDTO;
+import com.ubots.filmes.dto.FilmeCreateDTO;
+import com.ubots.filmes.dto.FilmeEditDTO;
+import com.ubots.filmes.dto.FilmeResponseDTO;
 import com.ubots.filmes.erros.FilmeError;
 import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Avaliacao;
@@ -8,7 +11,6 @@ import com.ubots.filmes.model.Filme;
 import com.ubots.filmes.service.AvaliacaoService;
 import com.ubots.filmes.service.FilmeService;
 import com.ubots.filmes.utils.NotaEnum;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -87,5 +89,12 @@ public class FilmeController {
         AvaliacaoResponseDTO response = new AvaliacaoResponseDTO(createdAvaliacao);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/not-evaluation", method = RequestMethod.GET)
+    public ResponseEntity<?> findAllNotEvaluation(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<FilmeResponseDTO> response = this.filmeService.findAllNotEvaluation(pageable);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
