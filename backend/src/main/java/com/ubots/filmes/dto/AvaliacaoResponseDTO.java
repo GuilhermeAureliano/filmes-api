@@ -1,7 +1,6 @@
 package com.ubots.filmes.dto;
 
 import com.ubots.filmes.model.Avaliacao;
-import com.ubots.filmes.model.Filme;
 import lombok.Getter;
 
 import java.util.UUID;
