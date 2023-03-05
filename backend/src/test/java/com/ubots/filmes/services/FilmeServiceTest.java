@@ -1,5 +1,6 @@
 package com.ubots.filmes.services;
 
+import com.ubots.filmes.dto.FilmeEditDTO;
 import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Filme;
 import com.ubots.filmes.repository.FilmeRepository;
@@ -19,8 +20,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -44,6 +44,15 @@ public class FilmeServiceTest {
         filme.setReleaseYear(LocalDate.parse("2001-12-19"));
         filme.setAvaliacoes(null);
         this.filmeRepository.save(filme);
+    }
+
+    @Test
+    public void create() throws ApiException {
+        this.criaFilme();
+
+        assertTrue(this.filmeRepository.findById(filme.getId()).isPresent());
+
+        this.filmeRepository.delete(filme);
     }
 
     @Test
@@ -78,6 +87,19 @@ public class FilmeServiceTest {
         } catch (ApiException e) {
             assertEquals("Filme não encontrado!", e.getMessage());
         }
+
+        this.filmeRepository.delete(filme);
+    }
+
+    @Test
+    public void update() throws ApiException {
+        this.criaFilme();
+        FilmeEditDTO filmeEditDTO = new FilmeEditDTO("Homem Aranha", "", "Primeiro filme da saga homem aranha!");
+
+        Filme filme = this.filmeService.update(this.filme.getId(), filmeEditDTO);
+        assertEquals("Homem Aranha", filme.getName());
+        assertEquals("Peter Jackson", filme.getDirector());
+        assertEquals("Primeiro filme da saga homem aranha!", filme.getSynopsis());
 
         this.filmeRepository.delete(filme);
     }
