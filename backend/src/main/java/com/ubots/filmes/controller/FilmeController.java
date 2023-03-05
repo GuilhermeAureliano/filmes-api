@@ -97,4 +97,12 @@ public class FilmeController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> findById(@PathVariable(value = "id") UUID id) throws ApiException {
+        Filme filme = this.filmeService.getById(id);
+        FilmeResponseDTO response = new FilmeResponseDTO(filme);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
