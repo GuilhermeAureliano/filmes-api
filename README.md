@@ -44,3 +44,5 @@ O JSON para avaliar um filme deve seguir o seguinte formato:
 
 ## Listar filmes NÃO avaliados
 Para listar todos os filmes que ainda não foram avaliados você precisa enviar uma requisição GET com parâmetros que podem ser passados na URL através de query parameters. A requisição `GET http://localhost:8080/filmes/not-evaluation?page=0&size=10&sort=id,asc` vai buscar todos os filmes não avaliados na primeira página, com tamanho igual a 10, ordenados pelo ID em ordem crescente. Caso você envie uma requisição `GET http://localhost:8080/filmes/not-evaluation` a listagem padrão será primeira página, tamanho igual a 10, ordenados pelo ID em ordem crescente. No Swagger http://localhost:8080/swagger-ui/index.html#/filme-controller/findAllNotEvaluation é necessário definir o parâmetro sort para `id` pois por default ele vem como "string" e o parâmetro size para `10` pois ele vem como 1.
+
+Os filmes que possuem o atributo `mediaAvaliacoes` como `null` significam que ainda não foram avaliados.
