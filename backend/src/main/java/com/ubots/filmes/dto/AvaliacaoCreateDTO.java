@@ -7,13 +7,24 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-@Getter
 public class AvaliacaoCreateDTO {
-
-
-    private NotaEnum nota;
-
-    @NotBlank
+    private NotaEnum notaEnum;
     private String comment;
+
+    public NotaEnum getNotaEnum() {
+        return notaEnum;
+    }
+
+    public void setNotaEnum(NotaEnum notaEnum) {
+        this.notaEnum = notaEnum;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }
+

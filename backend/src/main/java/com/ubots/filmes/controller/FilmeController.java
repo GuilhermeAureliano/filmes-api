@@ -1,9 +1,6 @@
 package com.ubots.filmes.controller;
 
-import com.ubots.filmes.dto.AvaliacaoResponseDTO;
-import com.ubots.filmes.dto.FilmeCreateDTO;
-import com.ubots.filmes.dto.FilmeEditDTO;
-import com.ubots.filmes.dto.FilmeResponseDTO;
+import com.ubots.filmes.dto.*;
 import com.ubots.filmes.erros.FilmeError;
 import com.ubots.filmes.exceptions.ApiException;
 import com.ubots.filmes.model.Avaliacao;
@@ -77,12 +74,12 @@ public class FilmeController {
     }
 
     @RequestMapping(value = "/{id}/evaluation", method = RequestMethod.POST)
-    public ResponseEntity<?> addEvaluation(@PathVariable(value = "id") UUID id, @RequestParam(value = "Nota do filme") NotaEnum notaEnum, @RequestParam String comment) throws ApiException {
+    public ResponseEntity<?> addEvaluation(@PathVariable(value = "id") UUID id, @RequestBody AvaliacaoCreateDTO avaliacaoCreateDTO) throws ApiException {
         Filme filme = this.filmeService.getById(id);
 
         Avaliacao createdAvaliacao = new Avaliacao();
-        createdAvaliacao.setGrade(notaEnum.getValor());
-        createdAvaliacao.setComment(comment);
+        createdAvaliacao.setGrade(avaliacaoCreateDTO.getNotaEnum().getValor());
+        createdAvaliacao.setComment(avaliacaoCreateDTO.getComment());
         createdAvaliacao.setFilme(filme);
         this.avaliacaoService.addEvaluation(createdAvaliacao);
 
