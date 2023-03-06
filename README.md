@@ -2,6 +2,18 @@
 
 Aplicação Java utilizando o framework Spring Boot para criar um CRUD de filmes. Com Maven para o gerenciamento de dependências, utilizo o  spring-boot-starter-web e spring-boot-starter-data-jpa para fornecer um serviço web que interage com um banco de dados PostgreSQL. Além disso, a API também utiliza o Swagger UI para documentação e interação interativa dos endpoints.
 
+O projeto também contém testes unitários utilizando o JUnit para os services, e testes de integração utilizando o Spring Mock MVC.
+
+## Tecnologias utilizadas
+- Java: Linguagem de programação utilizada no desenvolvimento da API.
+- Spring Boot: Framework utilizado para construir a aplicação RESTful.
+- Maven: Ferramenta de gerenciamento de dependências.
+- PostgreSQL: Sistema de gerenciamento de banco de dados relacional utilizado para armazenar os dados da aplicação.
+- JUnit: Dependência de testes unitários.
+- Mock MVC: Dependência de testes de integração.
+- SpringDoc: Ferramenta para geração de documentação da API.
+- Swagger UI: Interface gráfica utilizada para interagir e testar a API.
+
 ## Criar filme
 Para criar um novo filme você precisa enviar uma requisição POST para a rota   http://localhost:8080/filmes/create (caso utilize o Postman) ou a rota http://localhost:8080/swagger-ui/index.html#/filme-controller/create (caso deseje utilizar o Swagger interativo).
 
